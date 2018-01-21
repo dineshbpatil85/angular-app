@@ -1,0 +1,118 @@
+<div class="container">
+  <div class="row sidebar-header"><div class="col-sm-12 text-center"><h3>Flight Search</h3></div></div>
+  <div class="row border-all" >
+    <div class="col-sm-3" >
+      <div class="panel-div">
+        <div class="panel with-nav-tabs panel-default">
+          <div class="panel-heading">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#oneway" data-toggle="tab">One Way</a></li>
+              <li><a href="#round" data-toggle="tab">Round Trip</a></li>
+            </ul>
+          </div>
+          <div class="panel-body">
+            <div class="tab-content">
+              <div class="tab-pane fade in active" id="oneway">
+                <form class="form form-mx">
+                  <div class="form-group">
+                    <label class="sr-only" for="origin">Origin:</label>
+                    <input type="text" class="form-control" name="origin" [(ngModel)]="oneWay.origin" placeholder="Origin">
+                  </div>
+                  <div class="form-group">
+                    <label class="sr-only" for="destination">Destination:</label>
+                    <input type="text" class="form-control" name="destination" [(ngModel)]="oneWay.destination" placeholder="Destination">
+                  </div>
+                  <div class="form-group">
+                    <label class="sr-only" for="destination">Departure Date:</label>
+                    <input type="date" class="form-control" name="departDate" [(ngModel)]="oneWay.departDate">
+                  </div>
+                  <div class="form-group">
+                    <label class="sr-only" for="destination">Passengers:</label>
+                    <input type="number" class="form-control" name="passengers" placeholder="Passengers" [(ngModel)]="oneWay.passengers">
+                  </div>
+                  <button type="button" class="btn btn-danger pull-right" (click)="searchOneWay(oneWay)">Submit</button>
+                </form>
+              </div>
+              <div class="tab-pane fade" id="round">
+                <form class="form form-mx">
+                  <div class="form-group">
+                    <label class="sr-only" for="origin">Origin:</label>
+                    <input type="text" class="form-control" name="origin" [(ngModel)]="roundTrip.origin" placeholder="Origin">
+                  </div>
+                  <div class="form-group">
+                    <label class="sr-only" for="destination">Destination:</label>
+                    <input type="text" class="form-control" name="destination" [(ngModel)]="roundTrip.destination" placeholder="Destination">
+                  </div>
+                  <div class="form-group">
+                    <label class="sr-only" for="destination">Departure Date:</label>
+                    <input type="date" class="form-control" name="departDate" [(ngModel)]="roundTrip.departDate">
+                  </div>
+                  <div class="form-group">
+                    <label class="sr-only" for="destination">Return Date:</label>
+                    <input type="date" class="form-control" name="returnDate" [(ngModel)]="roundTrip.returnDate">
+                  </div>
+                  <div class="form-group">
+                    <label class="sr-only" for="destination">Passengers:</label>
+                    <input type="number" class="form-control" name="passengers" placeholder="Passengers" [(ngModel)]="roundTrip.passengers">
+                  </div>
+                  <button type="button" class="btn btn-danger pull-right" (click)="searchRoundTrip(roundTrip)">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p><input type="number" name="price" [(ngModel)]="price"></p>
+    </div>
+    <div class="col-sm-9 border-all-left">
+      <div id="content">
+        <nav class="navbar navbar-default" *ngIf="searchBox">
+          <div class="container-fluid">
+            <div class="navbar-header">                
+              <span *ngIf="tripType == 'oneway'">{{oneWay.origin}}</span>
+              <span *ngIf="tripType == 'roundtrip'">{{roundTrip.origin}}</span>
+              <i class="glyphicon glyphicon-chevron-right"></i>
+              <span *ngIf="tripType == 'oneway'">{{oneWay.destination}}</span>
+              <span *ngIf="tripType == 'roundtrip'">{{roundTrip.destination}}</span>
+              <i class="glyphicon glyphicon-chevron-right" *ngIf="tripType == 'roundtrip'"></i>
+              <span *ngIf="tripType == 'roundtrip'">{{roundTrip.origin}}</span>              
+            </div>
+          </div>
+        </nav>
+        <div class="list-group list-group-default">
+          <div class="row list-group-item" *ngFor="let flight of searchData">
+            <div class="media col-md-3 text-center">
+              <figure class="pull-left">
+                <img class="media-object img-rounded img-responsive logo"  src="../assets/images/airline.png" >
+                <h4>{{flight.name}}</h4>
+                <h6>{{flight.no}}</h6>
+              </figure>
+            </div>
+            <div class="col-md-6">
+              <div class="row"> 
+                <div class="col-md-6 contect-height">
+                  <p>Depart: {{flight.oneway.departure}}</p>
+                  <p>Arrival: {{flight.oneway.arrival}}</p>
+                  <p>Duration: {{flight.oneway.duration}}</p>
+                </div>
+                <div class="col-md-6 contect-height" *ngIf="flight.roundtrip">
+                  <p>Depart: {{flight.roundtrip.departure}}</p>
+                  <p>Arrival: {{flight.roundtrip.arrival}}</p>
+                  <p>Duration: {{flight.roundtrip.duration}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn btn-primary btn-md book-btn" *ngIf="tripType == 'oneway'"> Rs.{{flight.oneway.price * passengers}} </button>
+              <button type="button" class="btn btn-primary btn-md book-btn" *ngIf="tripType == 'roundtrip'"> Rs.{{flight.oneway.price + flight.roundtrip.price * passengers}} </button>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="noFlight">
+          <div class="col-md-12 text-center">No Flight available for this route/date(s).</div>
+        </div>
+      </div> 
+    </div>
+  </div>
+</div>
+		 
