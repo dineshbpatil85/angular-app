@@ -1,0 +1,49 @@
+<div class="col-sm-9 border-all-left">
+      <div id="content">
+        <nav class="navbar navbar-default" *ngIf="searchBox">
+          <div class="container-fluid">
+            <div class="navbar-header">                
+              <span *ngIf="tripType == 'oneway'">{{oneWay.origin}}</span>
+              <span *ngIf="tripType == 'roundtrip'">{{roundTrip.origin}}</span>
+              <i class="glyphicon glyphicon-chevron-right"></i>
+              <span *ngIf="tripType == 'oneway'">{{oneWay.destination}}</span>
+              <span *ngIf="tripType == 'roundtrip'">{{roundTrip.destination}}</span>
+              <i class="glyphicon glyphicon-chevron-right" *ngIf="tripType == 'roundtrip'"></i>
+              <span *ngIf="tripType == 'roundtrip'">{{roundTrip.origin}}</span>              
+            </div>
+          </div>
+        </nav>
+        <div class="list-group list-group-default">
+          <div class="row list-group-item" *ngFor="let flight of searchData">
+            <div class="media col-md-3 text-center">
+              <figure class="pull-left">
+                <img class="media-object img-rounded img-responsive logo"  src="../assets/images/airline.png" >
+                <h4>{{flight.name}}</h4>
+                <h6>{{flight.no}}</h6>
+              </figure>
+            </div>
+            <div class="col-md-6">
+              <div class="row"> 
+                <div class="col-md-6 contect-height">
+                  <p>Depart: {{flight.oneway.departure}}</p>
+                  <p>Arrival: {{flight.oneway.arrival}}</p>
+                  <p>Duration: {{flight.oneway.duration}}</p>
+                </div>
+                <div class="col-md-6 contect-height" *ngIf="flight.roundtrip">
+                  <p>Depart: {{flight.roundtrip.departure}}</p>
+                  <p>Arrival: {{flight.roundtrip.arrival}}</p>
+                  <p>Duration: {{flight.roundtrip.duration}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn btn-primary btn-md book-btn" *ngIf="tripType == 'oneway'"> Rs.{{flight.oneway.price * passengers}} </button>
+              <button type="button" class="btn btn-primary btn-md book-btn" *ngIf="tripType == 'roundtrip'"> Rs.{{flight.oneway.price + flight.roundtrip.price * passengers}} </button>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="noFlight">
+          <div class="col-md-12 text-center">No Flight available for this route/date(s).</div>
+        </div>
+      </div> 
+    </div>

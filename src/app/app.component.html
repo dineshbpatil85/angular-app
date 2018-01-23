@@ -62,7 +62,8 @@
           </div>
         </div>
       </div>
-      <p><input type="number" name="price" [(ngModel)]="price"></p>
+		<p class="text-center">{{searchText}}</p>
+		<p><input type="range" [(ngModel)]="searchText" class="form-control" min="0" max="100000" /></p>
     </div>
     <div class="col-sm-9 border-all-left">
       <div id="content">
@@ -80,7 +81,7 @@
           </div>
         </nav>
         <div class="list-group list-group-default">
-          <div class="row list-group-item" *ngFor="let flight of searchData">
+          <div class="row list-group-item" *ngFor="let flight of searchData | flight:searchText;">
             <div class="media col-md-3 text-center">
               <figure class="pull-left">
                 <img class="media-object img-rounded img-responsive logo"  src="../assets/images/airline.png" >
