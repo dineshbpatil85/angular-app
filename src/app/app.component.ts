@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
 		});		
 	}
 
+	//Search Flights for Oneway Trip
 	searchOneWay = function(oneWay){
 		this.searchData = [];				
 		this.oneWayTripData = JSON.parse(JSON.stringify( this.result ));
@@ -57,6 +58,7 @@ export class AppComponent implements OnInit {
         }
 	}
 
+	//Search Flights for Round Trip
 	searchRoundTrip = function(roundTrip){
 		this.searchData = [];
 		this.roundTripData = JSON.parse(JSON.stringify( this.result ));
